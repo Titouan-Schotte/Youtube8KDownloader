@@ -1,0 +1,231 @@
+
+body {
+    background-color: black;
+    background-image: url("../assets/back-main.png");
+    animation: stars 30s linear infinite;
+    overflow: hidden;
+}
+@keyframes stars {
+    0% {
+        background-position: 0 0;
+    }
+    100% {
+        background-position: 798px -798px;
+    }
+}
+
+@keyframes invert-stars {
+    0% {
+        background-position: 0 0;
+    }
+    100% {
+        background-position: 150px 0px;
+    }
+}
+.titlebar, .titlebar > * {
+   font-family: Roboto, sans-serif;
+   font-size: 15px;
+}
+/*Components*/
+h1 {
+    color: mediumpurple;
+    text-align: center;
+    font-family: "Arial Black";
+    /* -webkit-background-clip clips the background of the element to the text */
+    -webkit-background-clip: text;
+    animation: invert-stars 30s linear infinite;
+    font-size: 40px;
+}
+
+h2 {
+    color: purple;
+    text-align: center;
+    font-family: "Arial Black";
+    font-size: 20px;
+}
+h3 {
+    color: mediumpurple;
+    text-align: center;
+    font-family: "Arial Black";
+    font-size: 17px;
+}
+
+p {
+    color: white;
+    font-family: 'Arial';
+    font-size: 15px
+}
+
+button {
+
+    font-size: 25px;
+    border-radius: 5px;
+    padding: 10px;
+    color: black;
+    cursor: pointer;
+    -webkit-transform: scale(1);
+    transform: scale(1);
+    -webkit-transition: 0.2s ease-in-out;
+    transition: 0.2s ease-in-out;
+}
+
+button:hover {
+    -webkit-transform: scale(0.85);
+    transform: scale(0.85);
+    border-radius: 15px;
+    color: white;
+    animation: invert-stars 30s linear infinite;
+}
+
+.start {
+
+    font-size: 25px;
+    background-color: green;
+    border: 1px solid green;
+}
+
+.start:hover {
+    color: white;
+    border: 1px solid darkgreen;
+    background-color: darkgreen;
+}
+.restart {
+
+    font-size: 25px;
+    background-color: orange;
+    border: 1px solid orange;
+}
+.restart:hover {
+    color: white;
+    border: 1px solid orangered;
+    background-color: orangered;
+}
+.stop {
+
+    font-size: 25px;
+    background-color: red;
+    border: 1px solid red;
+}
+.stop:hover {
+    color: white;
+    border: 1px solid darkred;
+    background-color: darkred;
+}
+.console {
+
+    font-size: 25px;
+    background-color: rebeccapurple;
+    border: 1px solid rebeccapurple;
+}
+.console:hover {
+    color: white;
+    border: 1px solid purple;
+    background-color: purple;
+}
+
+.auteurp {
+    font-family: Consolas, monaco, monospace;
+    font-size: auto;
+    position: fixed;
+    color: white;
+    text-align: center;
+}
+
+
+.form__field {
+    font-family: Arial;
+    width: 75%;
+    border: 0;
+    border-bottom: 2px solid gray;
+    outline: 0;
+    font-size: 1.3rem;
+    color: white;
+    padding: 7px 0;
+    background: transparent;
+    transition: border-color 0.2s;
+    margin-bottom: auto;
+}
+label{
+    color: rebeccapurple;
+    text-align: center;
+    font-family: "Arial Black";
+    font-size: 14px;
+}
+
+
+/*Bar*/
+
+* {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-family: "Lato", sans-serif;
+    line-height: 1;
+    -moz-user-select: none; /* Firefox */
+    -webkit-user-select: none; /* Chrome, Safari, Opéra depuis la version 15 */
+    -ms-user-select: none; /* Internet explorer depuis la version 10 et Edge */
+    user-select: none; /* Propriété standard */
+}
+
+.sidebar-navigation {
+    display: inline-block;
+    min-height: 95vh;
+    width: 65px;
+    background-color: #313443;
+    float: left;
+}
+.sidebar-navigation ul {
+    text-align: center;
+    color: white;
+}
+.sidebar-navigation ul li {
+    padding: 20px 0;
+    cursor: pointer;
+    transition: all ease-out 120ms;
+}
+.sidebar-navigation ul li i {
+    display: block;
+    font-size: 20px;
+    transition: all ease 450ms;
+}
+.sidebar-navigation ul li .tooltip {
+    display: inline-block;
+    position: absolute;
+    background-color: #313443;
+    padding: 8px 15px;
+    border-radius: 3px;
+    margin-top: -26px;
+    left: 90px;
+    opacity: 0;
+    visibility: hidden;
+    font-size: 13px;
+    letter-spacing: 0.5px;
+}
+.sidebar-navigation ul li .tooltip:before {
+    content: "";
+    display: block;
+    position: absolute;
+    left: -4px;
+    top: 10px;
+    transform: rotate(45deg);
+    width: 10px;
+    height: 10px;
+    background-color: inherit;
+}
+.sidebar-navigation ul li:hover {
+    background-color: #22252E;
+}
+.sidebar-navigation ul li:hover .tooltip {
+    visibility: visible;
+    opacity: 1;
+}
+.sidebar-navigation ul li.active {
+    background-color: #22252E;
+}
+.sidebar-navigation ul li.active i {
+    color: #98D7EC;
+}
+
+.img-nav{
+    width: 38.4px;
+}

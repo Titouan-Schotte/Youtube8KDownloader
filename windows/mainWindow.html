@@ -1,0 +1,248 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Youtube Downloader</title>
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="stylemain.css">
+    <title>Document</title>
+</head>
+<body>
+<h1 aria-label="Youtube Downloader">
+  <span aria-hidden="true">
+    <span style="--index: 1s">Y</span>
+    <span style="--index: 1.1s">o</span>
+    <span style="--index: 1.2s">u</span>
+    <span style="--index: 1.3s">t</span>
+    <span style="--index: 1.4s">u</span>
+    <span style="--index: 1.5s">b</span>
+    <span style="--index: 1.6s">e</span>
+  </span>
+    <span aria-hidden="true" class="spacing"  style="--index: 1.7"> </span>
+    <span aria-hidden="true">
+    <span style="--index: 1.8s">D</span>
+    <span style="--index: 1.9s">o</span>
+    <span style="--index: 2s">w</span>
+    <span style="--index: 2.1s">n</span>
+    <span style="--index: 2.2s">l</span>
+    <span style="--index: 2.3s">o</span>
+    <span style="--index: 2.4s">a</span>
+    <span style="--index: 2.5s">d</span>
+    <span style="--index: 2.6s">e</span>
+    <span style="--index: 2.7s">r</span>
+  </span>
+</h1>
+
+    <div id="text-area">
+    <div style="margin-top: 120px; margin-left: 200px; margin-bottom: 50px">
+        <input name="url" id="url" class="starting-form__field" type="text" placeholder="Votre lien vers la vidéo" autofocus>
+    </div>
+    <center><button id='mp3' class="starting-format">MP3</button>&nbsp;&nbsp;
+        <button id='mp4' class="starting-format">MP4</button></center>
+    <div id='main-path' style="margin-top: 50px; margin-left: 200px; margin-bottom: 50px">
+        <form id="frmMain" name="frmMain">
+        <input name="path" id="path" class="starting-form__field__file" type="text" placeholder="Chemin du dossier de destination">&nbsp;&nbsp;<button class="starting-browse" type="button" onclick="document.getElementById('myFolder').click();"/>Chercher</button>
+        <input type="file" id="myFolder" name="myFolder" onchange="var fold = doc('myFolder').files[0].path.split('\\'); fold.pop(); doc('path').value = fold.join('\\')" style="display: none;" webkitdirectory directory multiple/>
+    </form>
+    </div>
+    <center><button id="launch" class="starting-launch">&nbsp;Conversion&nbsp;</button></center>
+    </div>
+    <div id="percent"></div>
+
+
+</body>
+</html>
+<script>
+
+    //NodeJS Code
+    const electron = require('electron')
+    const fs = require('fs')
+    const doc = id => document.getElementById(id)
+
+    doc('url').classList.remove('hidden');
+    setTimeout(function () {
+        doc('url').classList.remove('visuallyhidden');
+    }, 20);
+
+    sessionStorage.setItem("format", -1)
+
+    electron.ipcRenderer.send('getfolder', 'folder')
+    electron.ipcRenderer.on('responsefolder', function (event, args) {
+        if(args != false){
+            doc('path').value = args
+        }
+    })
+
+    doc('mp3').addEventListener('click', function() {
+        doc('mp3').firstChild.data  = 'MP3 🎵'
+        doc('main-path').style.marginTop = '45px'
+        doc('mp3').style.backgroundColor = 'orangered'
+        doc('mp3').style.borderColor = 'orangered'
+        doc('mp4').firstChild.data  = 'MP4'
+        doc('mp4').style.backgroundColor = 'grey'
+        doc('mp4').style.borderColor = 'grey'
+        sessionStorage.setItem("format", 1)
+    })
+    doc('mp4').addEventListener('click', function(){
+        doc('mp4').firstChild.data  = 'MP4 🎥'
+        doc('main-path').style.marginTop = '45px'
+        doc('mp4').style.backgroundColor = 'orangered'
+        doc('mp4').style.borderColor = 'orangered'
+        doc('mp3').firstChild.data  = 'MP3'
+        doc('mp3').style.backgroundColor = 'grey'
+        doc('mp3').style.borderColor = 'grey'
+        sessionStorage.setItem("format", 0)
+
+    })
+    function errorLaunch(id1, id2,msg){
+        doc(id1).placeholder = msg
+        doc(id1).value = ''
+        doc(id2).classList.add('animation')
+        doc(id2).style.borderColor = 'red'
+        doc(id2).style.backgroundColor = 'red'
+        setTimeout(function (){doc(id2).classList.remove('animation')
+            doc(id2).style.borderColor = 'orange'
+            doc(id2).style.backgroundColor = 'orange'}, 1000)
+    }
+    doc('launch').addEventListener('click', function (){
+        if(doc("path").value != ''){
+            try {if (fs.existsSync(doc("path").value)) {
+                console.log('Exist')
+            } else {
+                errorLaunch('path', 'launch', 'Chemin invalide !')
+                return;
+            }
+            } catch(err) {
+                errorLaunch('path', 'launch', 'Chemin invalide !')
+                return;
+            }
+        }
+
+        if(doc('url').value.indexOf('https://www.youtube.com/') == -1){
+            errorLaunch('url', 'launch', 'Url invalide !')
+
+            return;
+        }
+        if(sessionStorage.getItem('format').toString() == '-1'){
+            console.log('hi')
+            doc('mp4').style.backgroundColor = 'orangered'
+            doc('mp4').style.borderColor = 'orangered'
+            doc('mp4').style.transform= 'scale(1.1)'
+            doc('mp3').style.backgroundColor = 'orangered'
+            doc('mp3').style.borderColor = 'orangered'
+            doc('mp3').style.transform= 'scale(1.1)'
+            setTimeout(function (){
+                doc('mp4').style.backgroundColor = 'red'
+                doc('mp4').style.borderColor = 'red'
+                doc('mp3').style.backgroundColor = 'red'
+                doc('mp3').style.borderColor = 'red'
+                doc('mp3').style.transform= 'scale(1)'
+                doc('mp4').style.transform= 'scale(1)'
+            }, 500)
+        }
+        else{
+            var req = {
+                url : doc('url').value,
+                format : sessionStorage.getItem('format') == 0 ? "mp4" : "mp3",
+                path : doc('path').value
+            }
+            console.log(req)
+            electron.ipcRenderer.send('req', req)
+            electron.ipcRenderer.send('setfolder', ['folder', doc('path').value])
+            doc('text-area').innerHTML = `<div style="margin-top: 100px"><p>Veuillez Patienter ...</p></div><br><br><center><img height="100px" draggable="false" src="../assets/loading.gif"></center>`
+            electron.ipcRenderer.on('res', function (e, a){
+                doc('text-area').innerHTML = `<br><center><h2 style="font-size: 15px">${a.title}</h2><br><img draggable="false" height="200px" src="${a.thumbnails}"><br><p style="font-size: 13px">de ${a.author}</p></center>`
+                doc('percent').innerHTML = `<br><br><div class="red meter"><span style="width: 0%"></span></div>`
+                electron.ipcRenderer.on('percent', function (ev, ar) {
+                    console.log(ar)
+                    doc('percent').innerHTML = `<div class="red meter"><span style="width: ${parseInt(ar)}%"></span></div>`
+                })
+                electron.ipcRenderer.on('finish', function (eve,arg){
+                    doc('text-area').innerHTML = `<center><img draggable="false" height="250px" src="../assets/checked.gif"></center>`
+                    doc('percent').innerHTML = `<center><button id='destination' class="launch" style="margin-top: 90px">Destination</button>&nbsp;&nbsp;&nbsp;<button id='destination' onclick="location.reload()" class="format" style="margin-top: 90px">Convertion</button></center>`
+                    doc('destination').addEventListener('click', function(){
+                        electron.ipcRenderer.send('opendir', arg)
+                    })
+                })
+
+                electron.ipcRenderer.on('finishmp3', function FinishMp3(eve,arg){
+                    doc('text-area').innerHTML = `<br><center><img height="250px" src="../assets/checked.gif"></center>`
+                    doc('percent').innerHTML = `<center><button id='propriétés' class="format" style="margin-top: 90px">Propriétés</button>&nbsp;&nbsp;&nbsp;<button id='destination' class="launch" style="margin-top: 90px">Destination</button>&nbsp;&nbsp;&nbsp;<button id='destination' onclick="location.reload()" class="format" style="margin-top: 90px">Convertion</button></center>`
+                    doc('destination').addEventListener('click', function(){
+                        electron.ipcRenderer.send('opendir', arg[3])
+                    })
+                    doc('propriétés').addEventListener('click', function(){
+                        electron.ipcRenderer.send('getfile', 'file')
+                        electron.ipcRenderer.on('responsefile', function (event, args) {
+                            if(args != false){
+                                doc('mp3img').value = args
+                            }
+                        })
+                        doc('text-area').innerHTML = `<br><center>
+    <input name="mp3title" id="mp3title" class="form__field" type="text" placeholder="Titre du morceau" value="`+arg[0]+`"><br><br>
+    <input name="mp3composer" id="mp3composer" class="form__field" type="text" placeholder="Compositeur(s)"><br><br>
+    <input name="mp3album" id="mp3album" class="form__field" type="text" placeholder="Album"><br><br>
+    <input name="mp3year" id="mp3year" class="form__field" type="text" placeholder="Année de sortie"><br><br>
+    <input name="mp3description" id="mp3description" class="form__field" type="text" placeholder="Courte Description"><br><br>
+    <form id="frmMain" name="frmMain">
+        <input name="mp3img" id="mp3img" class="form__field__file" type="text" placeholder="Chemin vers l'image de l'album">
+        &nbsp;<button class="browse" type="button" onclick="document.getElementById('myFile').click();"/>Chercher</button>
+        <input type="file" id="myFile" name="myFile"  style="display: none;" onchange="doc('mp3img').value = doc('myFile').files[0].path" accept="image/png, image/gif, image/jpeg" //>
+    </form>
+    </center>`
+                        doc('percent').innerHTML = '<center><br><button style="margin-top: 10px" class="launch" id="prop">Sauvegarder</button>&nbsp;&nbsp;<button class="launch" id="return">&nbsp;&nbsp;Retour&nbsp;&nbsp;</button></center>'
+                        doc('return').addEventListener('click', function (){
+                            electron.ipcRenderer.send('pleasefinishmp3', arg)
+                            console.log('done')
+                        })
+                        doc('prop').addEventListener('click', function(){
+                            if(doc('mp3img').value != ''){
+                                try {
+                                    if (fs.existsSync(doc("mp3img").value)) {
+                                        console.log('Exist')
+                                    } else {
+                                        errorLaunch('mp3img', 'prop','Chemin invalide !')
+                                        return;
+                                    }
+                                } catch(err) {
+                                    errorLaunch('mp3img', 'prop','Chemin invalide !')
+                                    return;
+                                }
+                            }
+                            if(!'png/jpeg/gif/jpg'.includes(doc('mp3img').value.split('.').splice(-1, 1)[0].toString()) && doc('mp3img').value != ''){
+                                errorLaunch('mp3img', 'prop','Fichier invalide !')
+                            } else {
+                                doc('prop').style.borderColor = 'green'
+                                doc('prop').style.backgroundColor = 'green'
+                                setTimeout(function (){
+                                    doc('prop').style.borderColor = 'orange'
+                                    doc('prop').style.backgroundColor = 'orange'}, 1000)
+                                electron.ipcRenderer.send('setfile', ['file', doc('mp3img').value])
+                                var newtags = {
+                                    name: arg[0],
+                                    pathorigin: arg[1],
+                                    pathedited: arg[2],
+                                    title: doc('mp3title').value,
+                                    composer: doc('mp3composer').value,
+                                    album: doc('mp3album').value,
+                                    year: doc('mp3year').value,
+                                    description: doc('mp3description').value.toLowerCase(),
+                                    img : doc('mp3img').value
+                                }
+                                electron.ipcRenderer.send('prop', newtags)
+                            }
+                        })
+                    })
+                })
+            })
+
+        }
+    })
+
+</script>
+<script type="text/javascript">
+    doc('myFolder').addEventListener('change', function(){
+        doc('path').value = doc('myFile').files[0].path.split('\\').pop()
+    })
+</script>

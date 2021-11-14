@@ -1,0 +1,45 @@
+{
+  "name": "videodownloader",
+  "version": "1.0.0",
+  "description": "videodownloader de Titouan Schotté, téléchargeur de vidéos youtubeq",
+  "main": "app.js",
+  "scripts": {
+    "start": "electron app.js",
+    "pack": "electron-packager .",
+    "dist": "electron-builder"
+  },
+  "nsis": {
+    "deleteAppDataOnUninstall": true,
+    "uninstallDisplayName": "app"
+  },
+  "win": {
+    "target": [
+      "nsis"
+    ],
+    "icon": "./assets/icon.icns"
+  },
+  "build": {
+    "appId": "fr.titouanschotte.app",
+    "mac": {
+      "category": "public.app-category.utilities"
+    }
+  },
+  "author": "Titouan Schotté",
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "^13.1.4",
+    "electron-builder": "^22.11.7",
+    "electron-packager": "^15.2.0"
+  },
+  "dependencies": {
+    "child_process": "^1.0.2",
+    "custom-electron-titlebar": "^3.2.7",
+    "electron-store": "^8.0.0",
+    "event": "^1.0.0",
+    "fluent-ffmpeg": "^2.1.2",
+    "fs": "^0.0.1-security",
+    "https": "^1.0.0",
+    "url": "^0.11.0",
+    "ytdl-core": "^4.9.0"
+  }
+}
