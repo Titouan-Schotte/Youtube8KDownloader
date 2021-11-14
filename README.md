@@ -24,3 +24,7 @@ Click on the "Destination" button ...
 Open it and enjoy !!
 
 ![image](https://user-images.githubusercontent.com/73279480/141685882-b74cdaad-b71e-4587-a04d-ffc83faa4d3e.png)
+
+
+
+If you select MP4 format you will have a 8K video !
