@@ -2,16 +2,16 @@
 Here is a desktop application created with [electronJs](https://www.electronjs.org/) which is a framework for NodeJS as well as with the help of FFMPEG.
 You have available the entire source code of the application and a compiled version in the "Releases" tab.
 
-![presentation page](https://i.ibb.co/Rycw7V3/image.png)
+![presentation page](https://user-images.githubusercontent.com/73279480/147584952-5b486443-5057-4c54-b339-c678d9b881ae.png)
 
-![completed page](https://i.ibb.co/8szWHnB/image.png)
+![completed page](https://user-images.githubusercontent.com/73279480/147584936-dfe4db62-6af0-45fc-a348-f6272edacc8b.png)
 
 
 Downloading .....
 
-![downloading](https://i.ibb.co/V998MxV/image.png)
+![downloading](https://user-images.githubusercontent.com/73279480/147584978-bfe57144-36b6-4acf-85ad-96c831c401ba.png)
 
-![result](https://i.ibb.co/BgXDkJj/image.png)
+![result](https://user-images.githubusercontent.com/73279480/147584913-1b6f0e82-b8ac-48e9-9808-a3549245a386.png)
 
 You can also change properties of your music !
 
